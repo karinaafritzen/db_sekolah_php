@@ -8,17 +8,16 @@ if (!$koneksi) {
 }
 
 function check_login() {
-    if (!isset($_SESSION['user_id'])) {
+    if (!isset($_SESSION['login']) || !isset($_SESSION['user_id'])) {
         header("Location: login.php");
         exit();
     }
 }
 
 function check_login_from_folder() {
-    if (!isset($_SESSION['user_id'])) {
+    if (!isset($_SESSION['login']) || !isset($_SESSION['user_id'])) {
         header("Location: ../login.php");
         exit();
     }
 }
 ?>
-
