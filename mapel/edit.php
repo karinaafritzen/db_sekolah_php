@@ -7,8 +7,13 @@ if(isset($_POST['update'])){
     $nama_mapel = mysqli_real_escape_string($koneksi, $_POST['nama_mapel']);
     $kelas = mysqli_real_escape_string($koneksi, $_POST['kelas']);
     $guru_pengajar = mysqli_real_escape_string($koneksi, $_POST['guru_pengajar']);
-    mysqli_query($koneksi, "UPDATE mata_pelajaran SET nama_mapel='$nama_mapel', kelas='$kelas', guru_pengajar='$guru_pengajar' WHERE id='$id'");
-    echo "<script>alert('Data berhasil diperbarui');window.location='index.php';</script>";
+    
+    $query = "UPDATE mata_pelajaran SET nama_mapel='$nama_mapel', kelas='$kelas', guru_pengajar='$guru_pengajar' WHERE id='$id'";
+
+    if(mysqli_query($koneksi, $query)) {
+        header("Location: index.php?status=edit_sukses");
+        exit();
+    }
 }
 
 $data = mysqli_query($koneksi, "SELECT * FROM mata_pelajaran WHERE id='$id'");
@@ -19,7 +24,6 @@ $d = mysqli_fetch_array($data);
 <head>
     <title>Edit Mata Pelajaran</title>
     <link rel="stylesheet" href="../style.css?v=<?php echo filemtime('../style.css'); ?>">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 </head>
 <body>

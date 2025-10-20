@@ -6,8 +6,13 @@ if(isset($_POST['simpan'])){
     $nama_mapel = mysqli_real_escape_string($koneksi, $_POST['nama_mapel']);
     $kelas = mysqli_real_escape_string($koneksi, $_POST['kelas']);
     $guru_pengajar = mysqli_real_escape_string($koneksi, $_POST['guru_pengajar']);
-    mysqli_query($koneksi, "INSERT INTO mata_pelajaran (nama_mapel, kelas, guru_pengajar) VALUES ('$nama_mapel', '$kelas', '$guru_pengajar')");
-    echo "<script>alert('Data berhasil disimpan');window.location='index.php';</script>";
+
+    $query = "INSERT INTO mata_pelajaran (nama_mapel, kelas, guru_pengajar) VALUES ('$nama_mapel', '$kelas', '$guru_pengajar')";
+
+    if(mysqli_query($koneksi, $query)) {
+        header("Location: index.php?status=tambah_sukses");
+        exit();
+    }
 }
 ?>
 <!DOCTYPE html>
@@ -15,7 +20,6 @@ if(isset($_POST['simpan'])){
 <head>
     <title>Tambah Mata Pelajaran</title>
     <link rel="stylesheet" href="../style.css?v=<?php echo filemtime('../style.css'); ?>">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 </head>
 <body>

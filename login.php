@@ -60,6 +60,12 @@ if (isset($_POST['login'])) {
                 <p>Login untuk melanjutkan ke sistem</p>
             </div>
 
+            <?php
+            if (isset($_GET['status']) && $_GET['status'] == 'deleted') {
+                echo '<div class="success-message">Akun Anda telah berhasil dihapus.</div>';
+            }
+            ?>
+
             <?php if (!empty($error)): ?>
                 <div class="error-message"><?= htmlspecialchars($error); ?></div>
             <?php endif; ?>

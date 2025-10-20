@@ -1,6 +1,17 @@
 <?php 
 include '../koneksi.php'; 
 check_login_from_folder();
+
+$modal_message = '';
+if (isset($_GET['status'])) {
+    if ($_GET['status'] == 'tambah_sukses') {
+        $modal_message = "Mata pelajaran baru berhasil ditambahkan!";
+    } elseif ($_GET['status'] == 'edit_sukses') {
+        $modal_message = "Mata pelajaran berhasil diperbarui!";
+    } elseif ($_GET['status'] == 'hapus_sukses') {
+        $modal_message = "Mata pelajaran berhasil dihapus!";
+    }
+}
 ?>
 <!DOCTYPE html>
 <html lang="id">
@@ -9,7 +20,6 @@ check_login_from_folder();
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Data Mata Pelajaran</title>
     <link rel="stylesheet" href="../style.css?v=<?php echo filemtime('../style.css'); ?>">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 </head>
 <body>
@@ -44,7 +54,10 @@ check_login_from_folder();
                         <td><?= htmlspecialchars($d['guru_pengajar']); ?></td>
                         <td class="action-buttons">
                             <a href="edit.php?id=<?= $d['id']; ?>" class="btn btn-edit"><i class="fas fa-edit"></i> Edit</a>
-                            <a href="hapus.php?id=<?= $d['id']; ?>" class="btn btn-hapus" onclick="return confirm('Yakin ingin hapus?')"><i class="fas fa-trash"></i> Hapus</a>
+                            <a href="hapus.php?id=<?= $d['id']; ?>" class="btn btn-hapus" 
+                               onclick="event.preventDefault(); showConfirmModal('Apakah Anda yakin ingin menghapus mata pelajaran ini?', this.href, 'Hapus Data');">
+                               <i class="fas fa-trash"></i> Hapus
+                            </a>
                         </td>
                     </tr>
                     <?php } ?>
@@ -53,5 +66,32 @@ check_login_from_folder();
         </div>
     </main>
 </div>
+
+<!-- Modal HTML Structure -->
+<div id="customModal" class="modal-overlay">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h3 id="modalTitle" class="modal-title"></h3>
+        </div>
+        <div class="modal-body">
+            <p id="modalMessage"></p>
+        </div>
+        <div class="modal-footer">
+            <button id="modalCancelBtn" class="btn btn-secondary">Batal</button>
+            <button id="modalConfirmBtn" class="btn btn-hapus">Ya, Lanjutkan</button>
+        </div>
+    </div>
+</div>
+
+<script src="../script.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const message = "<?php echo $modal_message; ?>";
+    if (message) {
+        showModal(message, "Sukses");
+    }
+});
+</script>
+
 </body>
 </html>

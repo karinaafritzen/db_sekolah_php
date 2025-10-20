@@ -2,12 +2,11 @@
 require 'koneksi.php';
 check_login();
 
-// Ambil data pengguna dari sesi
 $user_id = $_SESSION['user_id'];
 $username = $_SESSION['username'];
 $nama_lengkap = $_SESSION['nama_lengkap'];
 $foto_profil = $_SESSION['foto_profil'];
-$email = $_SESSION['email']; // Tambahkan ini jika belum ada
+$email = $_SESSION['email'];
 ?>
 <!DOCTYPE html>
 <html lang="id">
@@ -15,7 +14,7 @@ $email = $_SESSION['email']; // Tambahkan ini jika belum ada
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard Admin</title>
-    <link rel="stylesheet" href="style.css?v=<?php echo filemtime('style.css'); ?>">
+    <link rel="stylesheet" href="style.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 </head>
@@ -58,7 +57,7 @@ $email = $_SESSION['email']; // Tambahkan ini jika belum ada
                     <h3>Mata Pelajaran</h3>
                     <p>Kelola data mapel</p>
                 </a>
-                <a href="eskul/index.php" class="dashboard-card">
+                <a href="ekskul/index.php" class="dashboard-card">
                     <i class="fas fa-futbol"></i>
                     <h3>Ekstrakurikuler</h3>
                     <p>Kelola data ekskul</p>

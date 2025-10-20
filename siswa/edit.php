@@ -1,14 +1,22 @@
 <?php 
 include '../koneksi.php';
+check_login_from_folder();
 $id = $_GET['id'];
+
 if(isset($_POST['update'])){
     $nis = mysqli_real_escape_string($koneksi, $_POST['nis']);
     $nama = mysqli_real_escape_string($koneksi, $_POST['nama']);
     $kelas = mysqli_real_escape_string($koneksi, $_POST['kelas']);
     $jurusan = mysqli_real_escape_string($koneksi, $_POST['jurusan']);
-    mysqli_query($koneksi, "UPDATE siswa SET nis='$nis', nama='$nama', kelas='$kelas', jurusan='$jurusan' WHERE id='$id'");
-    echo "<script>alert('Data siswa berhasil diperbarui');window.location='index.php';</script>";
+    
+    $query = "UPDATE siswa SET nis='$nis', nama='$nama', kelas='$kelas', jurusan='$jurusan' WHERE id='$id'";
+
+    if(mysqli_query($koneksi, $query)) {
+        header("Location: index.php?status=edit_sukses");
+        exit();
+    }
 }
+
 $data = mysqli_query($koneksi, "SELECT * FROM siswa WHERE id='$id'");
 $d = mysqli_fetch_array($data);
 ?>
@@ -19,14 +27,11 @@ $d = mysqli_fetch_array($data);
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Edit Siswa</title>
     <link rel="stylesheet" href="../style.css?v=<?php echo filemtime('../style.css'); ?>">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 </head>
 <body>
 <div class="container">
-    <header>
-        <h2>Edit Data Siswa</h2>
-    </header>
+    <header><h2>Edit Data Siswa</h2></header>
     <main>
         <div class="form-container">
             <form method="post">

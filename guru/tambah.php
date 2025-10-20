@@ -1,11 +1,18 @@
 <?php 
 include '../koneksi.php';
+check_login_from_folder();
+
 if(isset($_POST['simpan'])){
     $nip = mysqli_real_escape_string($koneksi, $_POST['nip']);
     $nama = mysqli_real_escape_string($koneksi, $_POST['nama']);
     $mapel = mysqli_real_escape_string($koneksi, $_POST['mapel']);
-    mysqli_query($koneksi, "INSERT INTO guru (nip,nama,mapel) VALUES ('$nip','$nama','$mapel')");
-    echo "<script>alert('Data guru berhasil disimpan');window.location='index.php';</script>";
+    
+    $query = "INSERT INTO guru (nip,nama,mapel) VALUES ('$nip','$nama','$mapel')";
+
+    if(mysqli_query($koneksi, $query)) {
+        header("Location: index.php?status=tambah_sukses");
+        exit();
+    }
 }
 ?>
 <!DOCTYPE html>
@@ -15,14 +22,11 @@ if(isset($_POST['simpan'])){
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tambah Guru</title>
     <link rel="stylesheet" href="../style.css?v=<?php echo filemtime('../style.css'); ?>">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 </head>
 <body>
 <div class="container">
-    <header>
-        <h2>Tambah Data Guru</h2>
-    </header>
+    <header><h2>Tambah Data Guru</h2></header>
     <main>
         <div class="form-container">
             <form method="post">
